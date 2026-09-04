@@ -111,13 +111,13 @@
     animation: coupleFloat 7s ease-in-out infinite;
   }
 
-  .window-couple img {
-    width: 54%;
+ .window-couple img {
+    width: 72%;
     max-height: 100%;
     object-fit: contain;
     object-position: center bottom;
-    opacity: .72;
-    filter: brightness(.48) saturate(.7) contrast(1.08) drop-shadow(0 20px 30px rgba(0,0,0,.48));
+    opacity: .58;
+    filter: brightness(.58) saturate(.78) contrast(1.08) drop-shadow(0 20px 30px rgba(0,0,0,.48));
   }
 
   .window-couple img:first-child { transform: translateX(3%) translateY(1%); }
@@ -154,7 +154,7 @@
   .window-glass {
     position: absolute;
     inset: 0;
-    z-index: 11;
+    z-index: 1;
     background: linear-gradient(115deg, rgba(255,255,255,.13), transparent 20%, transparent 68%, rgba(255,255,255,.05));
     pointer-events: none;
   }
@@ -325,9 +325,25 @@
 
   .hero-content {
     text-align: center;
-    max-width: 700px;
+    max-width: 760px;
     position: relative;
     z-index: 2;
+    padding: clamp(28px, 5vw, 52px) clamp(24px, 6vw, 60px);
+    border-radius: 28px;
+    background: rgba(25, 13, 19, .58);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.28);
+  }
+
+  .hero-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.08));
+    pointer-events: none;
+    z-index: -1;
   }
 
   /* Monogram */
@@ -350,11 +366,12 @@
     font-family: 'Cormorant SC', serif;
     font-size: clamp(11px, 1.8vw, 14px);
     letter-spacing: 0.35em;
-    color: var(--rose-gold);
+    color: var(--ivory);
     text-transform: uppercase;
     margin-bottom: 16px;
     opacity: 0;
     animation: slideUp 1s ease 2s forwards;
+    text-shadow: 0 2px 12px rgba(0,0,0,.7);
   }
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -364,53 +381,55 @@
   .hero-script {
     font-family: 'Great Vibes', cursive;
     font-size: clamp(48px, 9vw, 100px);
-    color: var(--rose-gold);
+    color: var(--ivory);
     line-height: 1;
     margin-bottom: 8px;
     opacity: 0;
     animation: slideUp 2s ease 3s forwards;
-    text-shadow: 0 2px 20px rgba(181,115,74,0.2);
+    text-shadow: 0 3px 22px rgba(0,0,0,.75);
   }
 
   .hero-ampersand {
     font-family: 'Great Vibes', cursive;
     font-size: clamp(36px, 6vw, 68px);
-    color: var(--rose-gold-light);
+    color: var(--gold);
     display: block;
     line-height: 1;
     opacity: 0;
     animation: slideUp 2s ease 1.5s forwards;
+    text-shadow: 0 3px 18px rgba(0,0,0,.7);
   }
 
   .hero-divider {
     display: flex;
     align-items: center;
-    gap: 16px;
     justify-content: center;
     margin: 20px 0;
     opacity: 0;
     animation: slideUp 2s ease 3s forwards;
   }
+
   .hero-divider span {
-    height: 1px;
-    width: clamp(40px, 8vw, 80px);
-    background: linear-gradient(90deg, transparent, var(--rose-gold-pale), transparent);
+    display: none;
   }
+
   .hero-divider i {
-    color: var(--rose-gold);
+    color: var(--gold);
     font-style: normal;
     font-size: 18px;
+    text-shadow: 0 2px 12px rgba(0,0,0,.7);
   }
 
   .hero-tagline {
     font-size: clamp(15px, 2.5vw, 20px);
     font-style: italic;
     font-weight: 300;
-    color: var(--warm-brown);
+    color: var(--ivory);
     letter-spacing: 0.05em;
     line-height: 1.7;
     opacity: 0;
     animation: slideUp 2.5s ease 3.5s forwards;
+    text-shadow: 0 2px 14px rgba(0,0,0,.75);
   }
 
   /* CHARACTERS */
@@ -432,7 +451,7 @@
   .character-figure img {
     width: 100%;
     height: auto;
-    opacity: 0.82;
+    opacity: 0.68;
     filter: drop-shadow(0 8px 24px rgba(100,60,20,0.15));
     object-fit: contain;
     object-position: bottom;
@@ -533,12 +552,12 @@
     margin: 28px 0;
   }
   .ornament-divider .line {
-    flex: 1;
-    max-width: 80px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--rose-gold-pale));
+    display: none;
   }
-  .ornament-divider .line.r { background: linear-gradient(270deg, transparent, var(--rose-gold-pale)); }
+
+  .ornament-divider {
+    gap: 0;
+  }
   .ornament-divider svg {
     width: 24px; height: 24px;
     color: var(--rose-gold-light);
@@ -910,6 +929,20 @@
     .theme-switcher { top: auto; right: 12px; bottom: 12px; }
   }
 
+
+  @media (max-width: 600px) {
+    .hero-content {
+      width: min(94vw, 560px);
+      padding: 24px 18px;
+      background: rgba(25, 13, 19, .64);
+      border-radius: 22px;
+    }
+
+    .hero-script {
+      text-shadow: 0 3px 18px rgba(0,0,0,.8);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
   }
@@ -1053,7 +1086,7 @@
       <!-- Monogram -->
       <div class="monogram-ring">
         <div class="character-figure groom1">
-<img src="https://www.image2url.com/r2/default/files/1779880925196-9e433a83-fb55-4d11-b8c3-71b8c5541a42.png" alt="Groom Character">
+<img src="image.png" alt="Groom Character">
         </div>
       </div>
 
