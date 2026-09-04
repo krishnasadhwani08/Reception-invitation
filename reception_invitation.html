@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palak & Mayank — Engagement Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Cinzel:wght@400;500;600&family=Cormorant+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7eee5;
+    --ivory: #fff9f2;
+    --rose-gold: #c68b72;
+    --rose-gold-light: #dfa58d;
+    --rose-gold-pale: #efd0bf;
+    --dark-wine: #5c2634;
+    --warm-brown: #735a51;
+    --text-dark: #302329;
+    --gold: #d3ad72;
+    --petal: #ead0c8;
+    --reception-bg-1: #24151d;
+    --reception-bg-2: #4a2531;
+    --reception-bg-3: #a96961;
+    --reception-light: #ffdca6;
+    --curtain: #3f1d29;
+    --glass: rgba(255,235,211,.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: transparent;
+    color: var(--text-dark);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  /* ===== PAPER TEXTURE OVERLAY ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  /* ===== LIVE RECEPTION BACKGROUND ===== */
+  .reception-background {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 45%, rgba(255,205,150,.16), transparent 34%), linear-gradient(135deg, var(--reception-bg-1), var(--reception-bg-2) 52%, #140d13);
+  }
+
+  .reception-glow {
+    position: absolute;
+    inset: -15%;
+    background: radial-gradient(ellipse at 50% 58%, rgba(255,194,125,.28), transparent 30%), radial-gradient(ellipse at 18% 75%, rgba(193,96,113,.20), transparent 28%), radial-gradient(ellipse at 82% 22%, rgba(211,173,114,.16), transparent 30%);
+    animation: receptionGlow 12s ease-in-out infinite alternate;
+  }
+
+  .reception-window {
+    position: absolute;
+    width: min(78vw, 980px);
+    height: min(88vh, 900px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    border: 12px solid rgba(211,173,114,.28);
+    background: #24151d;
+    box-shadow: 0 35px 120px rgba(0,0,0,.58), 0 0 0 1px rgba(255,255,255,.08), inset 0 0 100px rgba(0,0,0,.45);
+    animation: windowDrift 18s ease-in-out infinite;
+  }
+
+  .window-sky {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 38%, rgba(255,197,143,.62), transparent 30%), linear-gradient(180deg, #20141e 0%, #482731 42%, #8b4d51 68%, #c98769 100%);
+    animation: skyBreath 16s ease-in-out infinite alternate;
+  }
+
+  .window-silhouette {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 8%;
+    height: 30%;
+    background: linear-gradient(180deg, transparent, rgba(18,10,15,.92));
+    clip-path: polygon(0 45%, 15% 30%, 29% 42%, 40% 20%, 55% 42%, 67% 28%, 80% 45%, 100% 25%, 100% 100%, 0 100%);
+    opacity: .75;
+  }
+
+  .window-couple {
+    position: absolute;
+    left: 50%;
+    bottom: -1%;
+    transform: translateX(-50%);
+    width: 92%;
+    height: 94%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+    z-index: 5;
+    animation: coupleFloat 7s ease-in-out infinite;
+  }
+
+  .window-couple img {
+    width: 54%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+    opacity: .72;
+    filter: brightness(.48) saturate(.7) contrast(1.08) drop-shadow(0 20px 30px rgba(0,0,0,.48));
+  }
+
+  .window-couple img:first-child { transform: translateX(3%) translateY(1%); }
+  .window-couple img:last-child { transform: translateX(-3%); }
+
+  .window-curtain {
+    position: absolute;
+    top: -5%;
+    bottom: -5%;
+    width: 25%;
+    z-index: 9;
+    background: linear-gradient(90deg, #1b1016, var(--curtain) 38%, #7b3948 66%, #301621);
+    box-shadow: inset 0 0 28px rgba(0,0,0,.45);
+    opacity: .96;
+    animation: curtainSway 8s ease-in-out infinite;
+  }
+
+  .curtain-left { left: -7%; border-radius: 0 55% 45% 0; transform-origin: top left; }
+  .curtain-right { right: -7%; border-radius: 55% 0 0 45%; transform-origin: top right; animation-delay: -2s; }
+
+  .window-frame {
+    position: absolute;
+    z-index: 10;
+    background: linear-gradient(90deg, #8e6443, #e3bd82, #8d6241);
+    box-shadow: 0 0 15px rgba(0,0,0,.4);
+  }
+  .frame-top, .frame-bottom { left: 0; right: 0; height: 9px; }
+  .frame-top { top: 17%; }
+  .frame-bottom { bottom: 12%; }
+  .frame-left, .frame-right { top: 0; bottom: 0; width: 9px; }
+  .frame-left { left: 21%; }
+  .frame-right { right: 21%; }
+
+  .window-glass {
+    position: absolute;
+    inset: 0;
+    z-index: 11;
+    background: linear-gradient(115deg, rgba(255,255,255,.13), transparent 20%, transparent 68%, rgba(255,255,255,.05));
+    pointer-events: none;
+  }
+
+  .window-lights { position: absolute; inset: 0; z-index: 4; }
+  .window-lights span {
+    position: absolute; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--reception-light);
+    box-shadow: 0 0 12px var(--reception-light), 0 0 28px rgba(255,194,110,.75);
+    animation: lightTwinkle 3s ease-in-out infinite;
+  }
+  .window-lights span:nth-child(1){left:29%;top:13%}.window-lights span:nth-child(2){left:44%;top:9%;animation-delay:.5s}.window-lights span:nth-child(3){left:58%;top:15%;animation-delay:1s}.window-lights span:nth-child(4){left:71%;top:25%;animation-delay:1.5s}.window-lights span:nth-child(5){left:30%;top:35%;animation-delay:2s}.window-lights span:nth-child(6){left:70%;top:48%;animation-delay:.8s}.window-lights span:nth-child(7){left:38%;top:57%;animation-delay:1.8s}.window-lights span:nth-child(8){left:63%;top:65%;animation-delay:2.4s}
+
+  .reception-bokeh { position: absolute; inset: 0; pointer-events: none; }
+  .reception-bokeh span {
+    position: absolute; width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,215,160,.13); filter: blur(9px);
+    animation: bokehMove 13s ease-in-out infinite;
+  }
+  .reception-bokeh span:nth-child(1){left:8%;top:18%}.reception-bokeh span:nth-child(2){left:88%;top:17%;animation-delay:-3s}.reception-bokeh span:nth-child(3){left:12%;top:72%;animation-delay:-5s}.reception-bokeh span:nth-child(4){left:84%;top:74%;animation-delay:-7s}.reception-bokeh span:nth-child(5){left:3%;top:45%;animation-delay:-2s}.reception-bokeh span:nth-child(6){left:93%;top:48%;animation-delay:-6s}
+
+  @keyframes receptionGlow { from{transform:scale(1);opacity:.72} to{transform:scale(1.09);opacity:1} }
+  @keyframes windowDrift { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.025)} }
+  @keyframes skyBreath { from{filter:brightness(.82)} to{filter:brightness(1.08)} }
+  @keyframes coupleFloat { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
+  @keyframes curtainSway { 0%,100%{transform:skewX(0)} 50%{transform:skewX(1.3deg)} }
+  @keyframes lightTwinkle { 0%,100%{opacity:.3;transform:scale(.7)} 50%{opacity:1;transform:scale(1.25)} }
+  @keyframes bokehMove { 0%,100%{transform:translate(0,0) scale(.8)} 50%{transform:translate(18px,-24px) scale(1.2)} }
+
+  .reception-background[data-scene="hero"] .reception-window { filter: saturate(1); }
+  .reception-background[data-scene="details"] .reception-window { transform: translate(-50%, -50%) scale(1.035) translateY(-12px); filter: saturate(.92) brightness(.94); }
+  .reception-background[data-scene="rsvp"] .reception-window { transform: translate(-50%, -50%) scale(1.055) translateY(-20px); filter: saturate(.86) brightness(.82); }
+  .reception-background[data-scene="rsvp"] .window-lights span { animation-duration: 2.1s; }
+  .reception-background { transition: filter 1.2s ease; }
+
+  .theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 5000;
+    display: flex;
+    gap: 8px;
+    padding: 9px;
+    border: 1px solid rgba(255,225,195,.22);
+    background: rgba(28,15,21,.42);
+    backdrop-filter: blur(12px);
+    border-radius: 999px;
+  }
+  .theme-switcher button {
+    width: 25px; height: 25px; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); cursor: pointer;
+  }
+  .theme-switcher button:nth-child(1){background:linear-gradient(135deg,#d69a7b,#5c2634)}
+  .theme-switcher button:nth-child(2){background:linear-gradient(135deg,#d6b46d,#54202e)}
+  .theme-switcher button:nth-child(3){background:linear-gradient(135deg,#d7c08e,#17233b)}
+  .theme-switcher button:nth-child(4){background:linear-gradient(135deg,#cbb4a3,#263a35)}
+  .theme-switcher button.active { box-shadow: 0 0 0 2px rgba(255,255,255,.85), 0 0 14px rgba(255,220,170,.6); }
+
+  /* ===== ENVELOPE SECTION ===== */
+  #envelope-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #eee0d4 0%, #f7ede4 40%, #ead7cf 100%);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  #envelope-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 70% 50% at 20% 80%, rgba(181,115,74,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 80% 20%, rgba(181,115,74,0.06) 0%, transparent 60%);
+  }
+
+  .envelope-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    animation: floatEnvelope 3s ease-in-out infinite;
+  }
+  @keyframes floatEnvelope {
+    0%, 100% { transform: translateY(0); }
+    50%  { transform: translateY(-12px); }
+  }
+
+  .envelope-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(13px, 2vw, 16px);
+    color: var(--rose-gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeInHint 1.5s ease 0.8s forwards;
+  }
+  @keyframes fadeInHint {
+    to { opacity: 0.8; }
+  }
+
+  .envelope {
+    position: relative;
+    width: clamp(280px, 55vw, 520px);
+    height: clamp(190px, 38vw, 360px);
+    filter: drop-shadow(0 20px 60px rgba(100,60,20,0.25));
+    transition: transform 0.3s ease;
+  }
+  .envelope:hover { transform: scale(1.02); }
+
+  .envelope svg { width: 100%; height: 100%; }
+
+  /* Envelope open animation */
+  .flap {
+    transform-origin: top center;
+    transform-box: fill-box;
+    animation: none;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .envelope.opening .flap {
+    animation: openFlap 0.8s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  @keyframes openFlap {
+    0%   { transform: rotateX(0deg); }
+    100% { transform: rotateX(-180deg); }
+  }
+
+  .envelope.opening {
+    animation: envelopeUp 1s ease 0.5s forwards;
+  }
+  @keyframes envelopeUp {
+    to { transform: translateY(-100px) scale(0.8); opacity: 0; }
+  }
+
+  /* ===== MAIN INVITATION ===== */
+  #invitation {
+    opacity: 1;
+    transform: translateY(60px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  #invitation.visible {
+    opacity: 0.90;
+    transform: translateY(0);
+  }
+
+  /* ===== HERO SECTION ===== */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(247,238,229,0.10); backdrop-filter: blur(px);
+    position: relative;
+    overflow: hidden;
+    padding: 60px 20px;
+  }
+
+  .vine-left, .vine-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 120px;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .vine-left { left: 0; }
+  .vine-right { right: 0; transform: scaleX(-1); }
+
+  .hero-content {
+    text-align: center;
+    max-width: 700px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Monogram */
+  .monogram-ring {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 36px;
+    width: clamp(120px, 25vw, 200px);
+    height: clamp(120px, 25vw, 200px);
+    position: relative;
+    animation: fadeInScale 1s ease 2.5s both;
+  }
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.7); }
+    to   { opacity: 1; transform: scale(1.4); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(11px, 1.8vw, 14px);
+    letter-spacing: 0.35em;
+    color: var(--rose-gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: slideUp 1s ease 2s forwards;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(48px, 9vw, 100px);
+    color: var(--rose-gold);
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: slideUp 2s ease 3s forwards;
+    text-shadow: 0 2px 20px rgba(181,115,74,0.2);
+  }
+
+  .hero-ampersand {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(36px, 6vw, 68px);
+    color: var(--rose-gold-light);
+    display: block;
+    line-height: 1;
+    opacity: 0;
+    animation: slideUp 2s ease 1.5s forwards;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin: 20px 0;
+    opacity: 0;
+    animation: slideUp 2s ease 3s forwards;
+  }
+  .hero-divider span {
+    height: 1px;
+    width: clamp(40px, 8vw, 80px);
+    background: linear-gradient(90deg, transparent, var(--rose-gold-pale), transparent);
+  }
+  .hero-divider i {
+    color: var(--rose-gold);
+    font-style: normal;
+    font-size: 18px;
+  }
+
+  .hero-tagline {
+    font-size: clamp(15px, 2.5vw, 20px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--warm-brown);
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+    opacity: 0;
+    animation: slideUp 2.5s ease 3.5s forwards;
+  }
+
+  /* CHARACTERS */
+  .characters-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(10px, 3vw, 30px);
+    margin-top: 40px;
+    position: relative;
+    opacity: 0;
+    animation: slideUp 3s ease 4s forwards;
+    
+  }
+  .character-figure {
+    position: relative;
+    width: clamp(130px, 22vw, 220px);
+  }
+  .character-figure img {
+    width: 100%;
+    height: auto;
+    opacity: 0.82;
+    filter: drop-shadow(0 8px 24px rgba(100,60,20,0.15));
+    object-fit: contain;
+    object-position: bottom;
+  }
+  .character-figure.groom { transform: translateX(10px); }
+  .character-figure.bride { transform: translateX(-10px); }
+
+  /* ===== DETAILS SECTION ===== */
+  #details {
+    padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 40px);
+    background: linear-gradient(180deg, rgba(247,238,229,.90) 0%, rgba(240,232,220,.88) 100%);
+    position: relative;
+  }
+
+  .details-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(10px, 1.6vw, 13px);
+    letter-spacing: 0.4em;
+    color: var(--rose-gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(42px, 7vw, 80px);
+    color: var(--dark-wine);
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+
+  .details-card {
+    background: rgba(255,255,255,0.6);
+    border: 4px solid rgba(181,115,74,0.2);
+    border-radius: 40px;
+    padding: clamp(30px, 5vw, 60px);
+    position: relative;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+      0 4px 40px rgba(181,115,74,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.8);
+    margin-bottom: 40px;
+  }
+
+  .details-card::before, .details-card::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-color: var(--rose-gold-pale) ;
+    border-style: solid;
+    border-radius: 30px;
+    opacity: 0.5;
+  }
+  .details-card::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+  .details-card::after  { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+  .detail-block {
+    margin-bottom: 32px;
+  }
+  .detail-block:last-child { margin-bottom: 0; }
+
+  .detail-heading {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(10px, 1.5vw, 12px);
+    letter-spacing: 0.35em;
+    color: var(--rose-gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 500;
+    color: var(--dark-wine);
+    line-height: 1.3;
+  }
+  .detail-sub {
+    font-size: clamp(13px, 2vw, 16px);
+    font-style: italic;
+    color: var(--warm-brown);
+    margin-top: 4px;
+    font-weight: 300;
+  }
+
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin: 28px 0;
+  }
+  .ornament-divider .line {
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose-gold-pale));
+  }
+  .ornament-divider .line.r { background: linear-gradient(270deg, transparent, var(--rose-gold-pale)); }
+  .ornament-divider svg {
+    width: 24px; height: 24px;
+    color: var(--rose-gold-light);
+  }
+
+  /* ===== RSVP SECTION ===== */
+  #rsvp {
+    padding: clamp(60px, 10vw, 120px) 20px;
+    background: linear-gradient(160deg, rgba(237,224,212,.92) 0%, rgba(232,213,192,.90) 50%, rgba(240,228,212,.92) 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  #rsvp::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 50%, rgba(181,115,74,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 50%, rgba(181,115,74,0.05) 0%, transparent 60%);
+  }
+
+  .rsvp-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .rsvp-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(40px, 8vw, 80px);
+    color: var(--rose-gold);
+    margin-bottom: 16px;
+  }
+
+  .rsvp-text {
+    font-size: clamp(15px, 2.5vw, 19px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--warm-brown);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .rsvp-btn {
+    display: inline-block;
+    padding: 14px 44px;
+    border: 1.5px solid var(--rose-gold);
+    color: var(--rose-gold);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(11px, 1.8vw, 13px);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .rsvp-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--rose-gold);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+  .rsvp-btn:hover { color: white; }
+  .rsvp-btn:hover::before { transform: translateX(0); }
+  .rsvp-btn span { position: relative; z-index: 1; }
+
+  /* Both characters at bottom of rsvp */
+  .rsvp-characters {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    
+  }
+  .rsvp-characters img {
+    width: clamp(280px, 60vw, 520px);
+    opacity: 0.8;
+    filter: drop-shadow(0 12px 30px rgba(100,60,20,0.18));
+    border-radius: 40px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--text-dark);
+    color: rgba(245,239,228,0.7);
+    text-align: center;
+    padding: 36px 20px;
+    font-family: 'Cormorant SC', serif;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+  }
+  footer .ft-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: 32px;
+    color: var(--rose-gold-pale);
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 0;
+  }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.25s; }
+  .reveal-delay-3 { transition-delay: 0.4s; }
+  .reveal-delay-4 { transition-delay: 0.55s; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30,15,5,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    padding: 20px;
+  }
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .modal-box {
+    background: var(--cream);
+    border: 1px solid var(--rose-gold-pale);
+    padding: clamp(30px, 5vw, 60px);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    transform: scale(0.85);
+    transition: transform 0.4s ease;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+  }
+  .modal-overlay.open .modal-box { transform: scale(1); }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none; border: none;
+    font-size: 22px;
+    color: var(--warm-brown);
+    cursor: pointer;
+    font-family: serif;
+    line-height: 1;
+  }
+  .modal-box h3 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 48px;
+    color: var(--rose-gold);
+    margin-bottom: 12px;
+  }
+  .modal-box p {
+    font-size: 16px;
+    color: var(--warm-brown);
+    font-style: italic;
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+  .modal-box input, .modal-box select, .modal-box textarea {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    border: 1px solid var(--rose-gold-pale);
+    background: rgba(255,255,255,0.7);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.3s;
+  }
+  .modal-box input:focus, .modal-box select:focus, .modal-box textarea:focus {
+    border-color: var(--rose-gold);
+  }
+  .modal-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--rose-gold);
+    color: white;
+    border: none;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-radius: 2px;
+  }
+  .modal-submit:hover { background: var(--dark-wine); }
+  .modal-success {
+    display: none;
+    font-family: 'Great Vibes', cursive;
+    font-size: 38px;
+    color: var(--rose-gold);
+    padding: 20px 0;
+  }
+
+  /* ===== COUNTDOWN ===== */
+  .countdown {
+    display: flex;
+    gap: clamp(12px, 3vw, 28px);
+    justify-content: center;
+    margin: 32px 0;
+    flex-wrap: wrap;
+  }
+  .countdown-unit {
+    text-align: center;
+    min-width: 64px;
+  }
+  .countdown-number {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 600;
+    color: var(--dark-wine);
+    line-height: 1;
+    display: block;
+  }
+  .countdown-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--rose-gold);
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: block;
+  }
+  .countdown-sep {
+    font-size: 36px;
+    color: var(--rose-gold-pale);
+    align-self: center;
+    padding-bottom: 16px;
+    font-weight: 300;
+  }
+
+
+  /* ===== LOCATION MAP ===== */
+  .location-map-card {
+    margin-top: 40px;
+    background: rgba(255,255,255,.62);
+    border: 4px solid rgba(181,115,74,.2);
+    border-radius: 40px;
+    padding: clamp(18px, 3vw, 28px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 40px rgba(181,115,74,.08);
+  }
+
+  .location-map {
+    width: 100%;
+    height: clamp(280px, 45vw, 430px);
+    border: 0;
+    border-radius: 28px;
+    display: block;
+  }
+
+  .map-address {
+    margin: 18px auto 14px;
+    max-width: 680px;
+    font-size: clamp(14px, 2vw, 17px);
+    line-height: 1.7;
+    color: var(--warm-brown);
+  }
+
+  .map-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid var(--rose-gold);
+    color: var(--rose-gold);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    transition: .3s ease;
+  }
+
+  .map-button:hover {
+    background: var(--rose-gold);
+    color: #fff;
+  }
+
+  /* ===== MUSIC PLAYER ===== */
+  .music-control {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px 10px 10px;
+    border: 1px solid rgba(255,225,195,.28);
+    background: rgba(28,15,21,.55);
+    backdrop-filter: blur(12px);
+    border-radius: 999px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(0,0,0,.18);
+  }
+
+  .music-control .music-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--rose-gold);
+    font-size: 15px;
+  }
+
+  .music-control span:last-child {
+    font-family: 'Cormorant SC', serif;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+
+  .music-control.playing .music-icon {
+    animation: musicPulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes musicPulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(198,139,114,.25); }
+    50% { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(198,139,114,0); }
+  }
+
+  @media (max-width: 600px) {
+    .music-control {
+      left: 12px;
+      top: 12px;
+      padding: 8px;
+    }
+    .music-control span:last-child {
+      display: none;
+    }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .vine-left, .vine-right { width: 60px; opacity: 0.12; }
+    .character-figure { width: clamp(110px, 40vw, 160px); }
+    .details-card { padding: 24px 20px; }
+    .reception-window { width: 92vw; height: 76vh; border-width: 7px; }
+    .window-couple { width: 96%; height: 92%; left: 50%; }
+    .window-curtain { width: 31%; }
+    .frame-left { left: 17%; }
+    .frame-right { right: 17%; }
+    .theme-switcher { top: auto; right: 12px; bottom: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reception-background" aria-hidden="true">
+  <div class="reception-glow"></div>
+  <div class="reception-window">
+    <div class="window-sky"></div>
+    <div class="window-silhouette"></div>
+    <div class="window-lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="window-couple">
+<img src="p@m.png" alt="Image">
+
+    </div>
+    <div class="window-curtain curtain-left"></div>
+    <div class="window-curtain curtain-right"></div>
+    <div class="window-frame frame-top"></div><div class="window-frame frame-left"></div><div class="window-frame frame-right"></div><div class="window-frame frame-bottom"></div>
+    <div class="window-glass"></div>
+  </div>
+  <div class="reception-bokeh"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+</div>
+
+<div class="theme-switcher" aria-label="Reception color themes">
+  <button class="active" type="button" title="Champagne Rose" onclick="setTheme('rose')"></button>
+  <button type="button" title="Burgundy Gold" onclick="setTheme('burgundy')"></button>
+  <button type="button" title="Midnight Champagne" onclick="setTheme('midnight')"></button>
+  <button type="button" title="Sage Champagne" onclick="setTheme('sage')"></button>
+</div>
+
+<!-- ===== BACKGROUND MUSIC ===== -->
+<audio id="backgroundMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-control" id="musicControl" type="button" onclick="toggleMusic()" aria-label="Play or pause music">
+  <span class="music-icon" id="musicIcon">♫</span>
+  <span id="musicText">Play Music</span>
+</button>
+
+<!-- ===== ENVELOPE SECTION ===== -->
+<section id="envelope-section" onclick="openEnvelope()">
+  <div class="envelope-wrapper">
+    <div class="envelope" id="envelope">
+      <svg viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="envBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f5ede0"/>
+            <stop offset="100%" stop-color="#e8d8c4"/>
+          </linearGradient>
+          <linearGradient id="envFlap" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ecdcca"/>
+            <stop offset="100%" stop-color="#d8c8b0"/>
+          </linearGradient>
+          <linearGradient id="envShadow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#d4c0a8" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#c4b098" stop-opacity="0.8"/>
+          </linearGradient>
+          <filter id="soft-shadow">
+            <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#8B6040" flood-opacity="0.2"/>
+          </filter>
+        </defs>
+
+        <!-- Envelope body -->
+        <rect x="20" y="80" width="480" height="260" rx="4" fill="url(#envBody)" filter="url(#soft-shadow)"/>
+
+        <!-- Bottom fold triangles -->
+        <polygon points="20,340 260,210 500,340" fill="#ddc9b0"/>
+        <polygon points="20,80 260,210 20,340" fill="#e8d5bc"/>
+        <polygon points="500,80 260,210 500,340" fill="#dfc8a8"/>
+
+        <!-- Flap (top triangle) — rotates open -->
+        <g class="flap" id="envelope-flap">
+          <polygon points="20,80 500,80 260,230" fill="url(#envFlap)" stroke="#c8a878" stroke-width="0.5"/>
+          <!-- Flap decorative line -->
+          <line x1="20" y1="80" x2="260" y2="220" stroke="#c0a070" stroke-width="0.5" stroke-dasharray="4 4" opacity="0.4"/>
+          <line x1="500" y1="80" x2="260" y2="220" stroke="#c0a070" stroke-width="0.5" stroke-dasharray="4 4" opacity="0.4"/>
+        </g>
+
+        <!-- Monogram wax seal -->
+        <circle cx="260" cy="195" r="38" fill="#b5734a" opacity="0.92"/>
+        <circle cx="260" cy="195" r="35" fill="none" stroke="#d4956e" stroke-width="1" opacity="0.6"/>
+        <circle cx="260" cy="195" r="32" fill="none" stroke="#e8c4a8" stroke-width="0.5" opacity="0.4"/>
+
+        <!-- pt monogram in seal -->
+        <text x="260" y="200" text-anchor="middle" dominant-baseline="middle"
+              font-family="Great Vibes, cursive" font-size="26" fill="#faf6f0" opacity="0.95">pm</text>
+
+        <!-- Small laurel sprigs on seal -->
+        <g stroke="#faf6f0" stroke-width="0.8" fill="none" opacity="0.5">
+          <path d="M232,195 Q228,190 225,193 Q228,196 232,195"/>
+          <path d="M228,199 Q224,195 221,198 Q224,201 228,199"/>
+          <path d="M288,195 Q292,190 295,193 Q292,196 288,195"/>
+          <path d="M292,199 Q296,195 299,198 Q296,201 292,199"/>
+        </g>
+
+        <!-- Envelope border decoration -->
+        <rect x="20" y="80" width="480" height="260" rx="4" fill="none" stroke="#c8a878" stroke-width="1" opacity="0.4"/>
+
+
+      </svg>
+    </div>
+    <p class="envelope-hint">✦ Tap to open your invitation ✦</p>
+  </div>
+</section>
+
+<!-- ===== MAIN INVITATION ===== -->
+<div id="invitation">
+
+  <!-- HERO -->
+  <section id="hero">
+    <!-- Vine decorations -->
+    <svg class="vine-left" viewBox="0 0 120 800" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#b5734a" stroke-width="1.2">
+      <path d="M60,0 Q40,100 60,200 Q80,300 60,400 Q40,500 60,600 Q80,700 60,800"/>
+      <path d="M60,80 Q30,100 20,120 Q30,130 50,120"/>
+      <path d="M60,180 Q90,200 100,220 Q90,230 70,220"/>
+      <path d="M60,280 Q30,300 15,320 Q25,330 45,320"/>
+      <path d="M60,380 Q85,400 95,420 Q85,428 68,418"/>
+      <path d="M60,480 Q35,500 20,520 Q32,528 50,520"/>
+      <path d="M60,580 Q88,600 98,620 Q86,628 68,618"/>
+      <path d="M60,680 Q38,700 22,720 Q34,728 52,720"/>
+      <circle cx="20" cy="122" r="4" fill="#b5734a" opacity="0.4"/>
+      <circle cx="100" cy="222" r="4" fill="#b5734a" opacity="0.4"/>
+      <circle cx="15" cy="322" r="4" fill="#b5734a" opacity="0.4"/>
+      <circle cx="95" cy="422" r="4" fill="#b5734a" opacity="0.4"/>
+    </svg>
+    <svg class="vine-right" viewBox="0 0 120 800" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#b5734a" stroke-width="1.2">
+      <path d="M60,0 Q40,100 60,200 Q80,300 60,400 Q40,500 60,600 Q80,700 60,800"/>
+      <path d="M60,80 Q30,100 20,120 Q30,130 50,120"/>
+      <path d="M60,180 Q90,200 100,220 Q90,230 70,220"/>
+      <path d="M60,280 Q30,300 15,320 Q25,330 45,320"/>
+      <path d="M60,380 Q85,400 95,420 Q85,428 68,418"/>
+      <path d="M60,480 Q35,500 20,520 Q32,528 50,520"/>
+      <circle cx="20" cy="122" r="4" fill="#b5734a" opacity="0.4"/>
+      <circle cx="100" cy="222" r="4" fill="#b5734a" opacity="0.4"/>
+    </svg>
+
+    <div class="hero-content">
+      <!-- Monogram -->
+      <div class="monogram-ring">
+        <div class="character-figure groom1">
+<img src="https://www.image2url.com/r2/default/files/1779880925196-9e433a83-fb55-4d11-b8c3-71b8c5541a42.png" alt="Groom Character">
+        </div>
+      </div>
+
+      <p class="hero-eyebrow">With joyful hearts, we request the honour of your presence</p>
+      <div class="hero-script" style="animation-delay:0.7s">Palak</div>
+      <span class="hero-ampersand">&amp;</span>
+      <div class="hero-script" style="animation-delay:1.0s; margin-top:4px">Mayank</div>
+
+      <div class="hero-divider">
+        <span></span>
+        <i>✦</i>
+        <span></span>
+      </div>
+
+      
+
+      <p class="hero-tagline">
+        Two souls, one journey — beginning here, beginning now.<br>
+        <em>Engagement Celebration</em>
+      </p>
+
+
+    </div>
+  </section>
+
+  <!-- DETAILS SECTION -->
+  <section id="details">
+    <div class="details-inner">
+      <span class="section-label reveal">— The Occasion —</span>
+      <h2 class="section-title reveal reveal-delay-1">Engagement</h2>
+
+      <div class="details-card reveal reveal-delay-2">
+        <div class="detail-block">
+          <p class="detail-heading">📅  When</p>
+          <p class="detail-value">Friday,September 11, 2026</p>
+          <p class="detail-sub">Celebrations begin at 3:00pm</p>
+        </div>
+
+        <div class="ornament-divider">
+          <div class="line"></div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
+          </svg>
+          <div class="line r"></div>
+        </div>
+
+        <div class="detail-block">
+          <p class="detail-heading">📍  Venue</p>
+          <p class="detail-value">Om Resort</p>
+          <p class="detail-sub">National Highway 39, Rewa Road, Satna, Madhya Pradesh</p>
+        </div>
+
+        <div class="ornament-divider">
+          <div class="line"></div>
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>
+          </svg>
+          <div class="line r"></div>
+        </div>
+
+        <div class="detail-block">
+          <p class="detail-heading">👗  Attire</p>
+          <p class="detail-value">Festive Traditional / Semi-Formal</p>
+          <p class="detail-sub">Dress in your most joyful colours</p>
+        </div>
+      </div>
+
+      <!-- ===== GOOGLE MAPS ===== -->
+      <div class="location-map-card reveal reveal-delay-3">
+        <span class="section-label">— Find Us —</span>
+        <h3 class="section-title" style="font-size:clamp(36px,6vw,60px); margin-bottom:20px;">The Venue</h3>
+
+        <iframe
+          class="location-map"
+          title="Om Resort, Satna location map"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=National%20Highway%2039%2C%20Rewa%20Rd%2C%20opposite%20Tata%20Motors%2C%20beside%20Omega%20Petrol%20Pump%2C%20Satna%2C%20Nimi%2C%20Madhya%20Pradesh%20485113&output=embed">
+        </iframe>
+
+        <p class="map-address">
+          National Highway 39, Rewa Rd, opposite Tata Motors,<br>
+          beside Omega Petrol Pump, Satna, Nimi, Madhya Pradesh 485113
+        </p>
+
+        <a
+          class="map-button"
+          href="https://www.google.com/maps/dir/?api=1&destination=National%20Highway%2039%2C%20Rewa%20Rd%2C%20opposite%20Tata%20Motors%2C%20beside%20Omega%20Petrol%20Pump%2C%20Satna%2C%20Nimi%2C%20Madhya%20Pradesh%20485113"
+          target="_blank"
+          rel="noopener">
+          📍 Get Directions
+        </a>
+      </div>
+
+      <!-- Countdown -->
+      <div class="reveal reveal-delay-3">
+        <span class="section-label" style="margin-bottom:20px; display:block">— Counting Down —</span>
+        <div class="countdown" id="countdown">
+          <div class="countdown-unit">
+            <span class="countdown-number" id="cd-days">—</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <span class="countdown-sep">·</span>
+          <div class="countdown-unit">
+            <span class="countdown-number" id="cd-hours">—</span>
+            <span class="countdown-label">Hours</span>
+          </div>
+          <span class="countdown-sep">·</span>
+          <div class="countdown-unit">
+            <span class="countdown-number" id="cd-mins">—</span>
+            <span class="countdown-label">Minutes</span>
+          </div>
+          <span class="countdown-sep">·</span>
+          <div class="countdown-unit">
+            <span class="countdown-number" id="cd-secs">—</span>
+            <span class="countdown-label">Seconds</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="details-card reveal reveal-delay-4" style="margin-top:40px; font-style:italic; font-size:clamp(16px,2.5vw,22px); line-height:1.9; color:var(--warm-brown); font-weight:300;">
+        <p style="margin-bottom:12px;">"Love is not just a feeling — it is a promise, a choice, and a gift shared between two hearts."</p>
+        <p style="font-size:0.8em; letter-spacing:0.1em; color:var(--rose-gold); font-style:normal; font-family:'Cormorant SC', serif; text-transform:uppercase;">Palak &amp; Mayank</p>
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <span class="ft-script">Palak &amp; Mayank</span>
+    ✦ &nbsp; Engagement · September 11, 2026 &nbsp; ✦
+    <br><br>
+    <small style="opacity:0.5; letter-spacing:0.1em">Made with love &hearts;</small>
+  </footer>
+
+</div><!-- end #invitation -->
+
+
+
+<script>
+// ===== ENVELOPE OPEN =====
+let opened = false;
+function openEnvelope() {
+  if (opened) return;
+  opened = true;
+  const env = document.getElementById('envelope');
+  const flap = document.getElementById('envelope-flap');
+  env.classList.add('opening');
+  flap.style.animation = 'openFlap 0.7s cubic-bezier(0.4,0,0.2,1) forwards';
+
+  setTimeout(() => {
+    document.getElementById('envelope-section').style.display = 'none';
+    const inv = document.getElementById('invitation');
+    inv.style.display = 'block';
+    setTimeout(() => inv.classList.add('visible'), 50);
+    initScrollReveal();
+    initCountdown();
+    startMusic();
+  }, 1100);
+}
+
+// ===== BACKGROUND MUSIC =====
+const backgroundMusic = document.getElementById('backgroundMusic');
+const musicControl = document.getElementById('musicControl');
+const musicIcon = document.getElementById('musicIcon');
+const musicText = document.getElementById('musicText');
+
+function updateMusicUI(isPlaying) {
+  musicControl.classList.toggle('playing', isPlaying);
+  musicIcon.textContent = isPlaying ? '❚❚' : '♫';
+  musicText.textContent = isPlaying ? 'Pause Music' : 'Play Music';
+}
+
+function startMusic() {
+  if (!backgroundMusic) return;
+  backgroundMusic.volume = 0.38;
+  backgroundMusic.play().then(() => {
+    updateMusicUI(true);
+  }).catch(() => {
+    updateMusicUI(false);
+  });
+}
+
+function toggleMusic() {
+  if (!backgroundMusic) return;
+
+  if (backgroundMusic.paused) {
+    backgroundMusic.volume = 0.38;
+    backgroundMusic.play().then(() => updateMusicUI(true)).catch(() => {
+      alert('Please add a music.mp3 file next to this HTML file.');
+    });
+  } else {
+    backgroundMusic.pause();
+    updateMusicUI(false);
+  }
+}
+
+// ===== SCROLL REVEAL =====
+function initScrollReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ===== COUNTDOWN =====
+function initCountdown() {
+  const target = new Date('2026-09-11T15:00:00');
+  function update() {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hours').textContent = '0';
+      document.getElementById('cd-mins').textContent = '0';
+      document.getElementById('cd-secs').textContent = '0';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// ===== MODAL =====
+function openModal() {
+  document.getElementById('rsvpModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('rsvpModal').classList.remove('open');
+}
+document.getElementById('rsvpModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function submitRSVP() {
+  const name = document.getElementById('rsvp-name').value.trim();
+  const attending = document.getElementById('rsvp-attending').value;
+  if (!name || !attending) {
+    alert('Please enter your name and attendance status.');
+    return;
+  }
+  document.getElementById('rsvp-form').style.display = 'none';
+  document.getElementById('rsvp-success').style.display = 'block';
+}
+
+// Escape key closes modal
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ===== LIVE PARALLAX + PAGE CONTEXT =====
+let px=0, py=0;
+let scrollTick=false;
+
+document.addEventListener('mousemove', e => {
+  px=(e.clientX/window.innerWidth-.5);
+  py=(e.clientY/window.innerHeight-.5);
+  const win=document.querySelector('.reception-window');
+  const glow=document.querySelector('.reception-glow');
+  if(win) win.style.marginLeft=(px*10)+'px';
+  if(glow) glow.style.translate=`${px*-12}px ${py*-10}px`;
+});
+
+function updateReceptionScene() {
+  const bg=document.querySelector('.reception-background');
+  const sections=[...document.querySelectorAll('#hero, #details, #rsvp')];
+  if(!bg || !sections.length) return;
+  const center=window.innerHeight*.45;
+  let closest=sections[0], distance=Infinity;
+  sections.forEach(section=>{
+    const rect=section.getBoundingClientRect();
+    const d=Math.abs((rect.top+rect.bottom)/2-center);
+    if(d<distance){ distance=d; closest=section; }
+  });
+  bg.dataset.scene=closest.id;
+
+  const progress=Math.min(1, Math.max(0, window.scrollY/(document.documentElement.scrollHeight-window.innerHeight||1)));
+  const win=document.querySelector('.reception-window');
+  if(win) win.style.setProperty('--scroll-progress', progress);
+}
+
+window.addEventListener('scroll', ()=>{
+  if(!scrollTick){
+    requestAnimationFrame(()=>{ updateReceptionScene(); scrollTick=false; });
+    scrollTick=true;
+  }
+});
+window.addEventListener('resize', updateReceptionScene);
+setTimeout(updateReceptionScene, 100);
+
+// ===== RECEPTION COLOR THEMES =====
+function setTheme(theme) {
+  const root = document.documentElement;
+  const themes = {
+    rose: {
+      cream:'#f7eee5', ivory:'#fff9f2', rose:'#c68b72', light:'#dfa58d', pale:'#efd0bf', wine:'#5c2634', brown:'#735a51', text:'#302329', gold:'#d3ad72', bg1:'#24151d', bg2:'#4a2531', bg3:'#a96961', lightBg:'#ffdca6', curtain:'#3f1d29'
+    },
+    burgundy: {
+      cream:'#f4e8dc', ivory:'#fff8ed', rose:'#c69a62', light:'#e0bb7d', pale:'#ead3a9', wine:'#54202e', brown:'#704c43', text:'#291b20', gold:'#d6ad63', bg1:'#1b0d14', bg2:'#4a1728', bg3:'#87404b', lightBg:'#ffe0a1', curtain:'#3b1321'
+    },
+    midnight: {
+      cream:'#f4efe8', ivory:'#fffaf1', rose:'#c7a16b', light:'#dfc18c', pale:'#ead8b8', wine:'#17233b', brown:'#655c5b', text:'#202333', gold:'#d7b66f', bg1:'#0d1426', bg2:'#1b2948', bg3:'#6f5960', lightBg:'#ffe4ad', curtain:'#111a31'
+    },
+    sage: {
+      cream:'#f3f0e8', ivory:'#fffdf5', rose:'#a58b67', light:'#c7ad83', pale:'#ded1b6', wine:'#263a35', brown:'#5d665d', text:'#27302c', gold:'#c9aa70', bg1:'#101c19', bg2:'#263a35', bg3:'#77826c', lightBg:'#f5ddb0', curtain:'#1c2d29'
+    }
+  };
+  const t=themes[theme];
+  root.style.setProperty('--cream',t.cream); root.style.setProperty('--ivory',t.ivory); root.style.setProperty('--rose-gold',t.rose); root.style.setProperty('--rose-gold-light',t.light); root.style.setProperty('--rose-gold-pale',t.pale); root.style.setProperty('--dark-wine',t.wine); root.style.setProperty('--warm-brown',t.brown); root.style.setProperty('--text-dark',t.text); root.style.setProperty('--gold',t.gold); root.style.setProperty('--reception-bg-1',t.bg1); root.style.setProperty('--reception-bg-2',t.bg2); root.style.setProperty('--reception-bg-3',t.bg3); root.style.setProperty('--reception-light',t.lightBg); root.style.setProperty('--curtain',t.curtain);
+  document.querySelectorAll('.theme-switcher button').forEach((b,i)=>b.classList.toggle('active',['rose','burgundy','midnight','sage'][i]===theme));
+  localStorage.setItem('receptionTheme',theme);
+}
+const savedTheme=localStorage.getItem('receptionTheme');
+if(savedTheme) setTheme(savedTheme);
+
+// Hide invitation initially
+document.getElementById('invitation').style.display = 'none';
+</script>
+</body>
+</html>
